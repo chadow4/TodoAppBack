@@ -21,12 +21,13 @@ export const toUserDto = (data: UsersEntity): UserDto => {
 };
 
 export const toTodoDto = (data: TodosEntity): TodoDto => {
-  const { id, content, finished, createdAt, user, category } = data;
+  const { id, content, finished, createdAt, desiredEndDate, user, category } = data;
 
   let todoDto: TodoDto = {
     id,
     content,
     finished,
+    desiredEndDate,
     createdAt,
     user: user && toUserDto(user),
     category: category && toCategoryDto(category),

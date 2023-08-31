@@ -22,6 +22,9 @@ export class TodosEntity {
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   updatedAt: Date;
 
+  @Column({ type: "timestamp",default: null })
+  desiredEndDate: Date;
+
   @ManyToOne(() => UsersEntity, user => user.todos)
   user: UsersEntity;
 

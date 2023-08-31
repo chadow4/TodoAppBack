@@ -13,6 +13,9 @@ export class TodoDto {
   finished: boolean;
 
   @IsNotEmpty()
+  desiredEndDate: Date;
+
+  @IsNotEmpty()
   createdAt: Date;
   user : UserDto;
   category: CategoryDto;

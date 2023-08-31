@@ -9,4 +9,7 @@ export class TodoCreateDto {
 
   @IsNotEmpty()
   idCategory: number;
+
+  @IsNotEmpty()
+  desiredEndDate: Date;
 }

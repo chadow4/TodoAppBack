@@ -21,7 +21,7 @@ export class TodosService {
   }
 
   async createTodo(todo: TodoCreateDto, idUser: number): Promise<TodoDto> {
-    if (!todo.content || !idUser || !todo.idCategory) {
+    if (!todo.content || !todo.desiredEndDate || !idUser || !todo.idCategory) {
       throw new HttpException("Arguments manquants", HttpStatus.BAD_REQUEST);
     }
 
@@ -44,8 +44,9 @@ export class TodosService {
     const createTodo = this.todosRepository.create(
       {
         content: todo.content,
-        user,
-        category
+        desiredEndDate: todo.desiredEndDate,
+        user : user,
+        category :category
       }
     );
 
@@ -67,12 +68,16 @@ export class TodosService {
       throw new HttpException("La Todo n'est pas dans la liste des Todos de l'utilisateur", HttpStatus.UNAUTHORIZED);
     }
 
-    todo.finished = true;
+    if(todo.finished){
+      todo.finished = false;
+    }else{
+      todo.finished = true;
+    }
 
     try {
       return toTodoDto(await this.todosRepository.save(todo));
     } catch (error) {
-      throw new HttpException("Erreur, votre todo n'a pas pu être défini comme finie", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException("Erreur, votre todo n'a pas pu changer d'état", HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
